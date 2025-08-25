@@ -6,5 +6,5 @@ export default defineConfig({
   css: {
     postcss: './postcss.config.cjs',
   },
-  base: "/PeerSync",
+  base: process.env.VITE_BASE_PATH || '/Peersync',
 });
