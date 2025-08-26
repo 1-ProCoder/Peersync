@@ -1,3 +1,67 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Dark theme variables */
+:root {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --accent: #3b82f6;
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-screen;
+  background: radial-gradient(
+    circle at 10% 20%,
+    rgba(15, 23, 42, 1) 0%,
+    rgba(15, 23, 42, 0.8) 50%,
+    rgba(2, 6, 23, 1) 100%
+  );
+  background-attachment: fixed;
+}
+
+/* Page container */
+.page-container {
+  @apply min-h-screen p-4 md:p-6 lg:p-8;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Card styles */
+.card {
+  @apply bg-[var(--bg-secondary)] rounded-xl p-6 shadow-lg border border-gray-800/50;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 
+              0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Helper classes */
+.anchor-offset {
+  scroll-margin-top: 6rem;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-900/50;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-700 rounded-full hover:bg-gray-600;
+}

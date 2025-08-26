@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
   const navLinks = [
-    { name: 'Overview', to: '/#overview' },
-    { name: 'Features', to: '/#features' },
-    { name: 'FAQ', to: '/#faq' },
+    { name: 'Overview', to: '/#overview', hash: 'overview' },
+    { name: 'Features', to: '/#features', hash: 'features' },
+    { name: 'FAQ', to: '/#faq', hash: 'faq' },
   ];
+  const navigate = useNavigate();
+
+  const handleHashNav = (hash) => (e) => {
+    e.preventDefault();
+    setIsOpen(false);
+    // navigate to root + hash which updates location and triggers Index scroll effect
+    navigate(`/#${hash}`);
+  };
 
   return (
     <nav className="fixed inset-x-0 top-6 z-50 px-4 pointer-events-auto">
@@ -28,15 +36,16 @@ const Navbar = () => {
           {/* Center: Links */}
           <div className="hidden md:flex items-center space-x-6">
             {navLinks.map((link) => (
-              <Link
+              <a
                 key={link.to}
-                to={link.to}
+                href={link.to}
+                onClick={handleHashNav(link.hash)}
                 className={`text-sm font-medium px-3 py-2 rounded-full transition-colors ${
-                  location.hash === link.to.replace('/#', '#') ? 'text-white' : 'text-slate-200/90 hover:text-white'
+                  location.hash === `#${link.hash}` ? 'text-white' : 'text-slate-200/90 hover:text-white'
                 }`}
               >
                 {link.name}
-              </Link>
+              </a>
             ))}
           </div>
 
@@ -45,7 +54,7 @@ const Navbar = () => {
             <Link to="/login" className="px-4 py-2 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-sm">
               Login
             </Link>
-            <Link to="/signup" className="px-4 py-2 rounded-full bg-violet-500 hover:bg-violet-600 text-white font-semibold text-sm">
+            <Link to="/Dashboard" className="px-4 py-2 rounded-full bg-violet-500 hover:bg-violet-600 text-white font-semibold text-sm">
               Signup
             </Link>
 
@@ -69,9 +78,9 @@ const Navbar = () => {
           <div className="md:hidden mt-3 mx-auto max-w-md rounded-lg bg-slate-900/80 border border-slate-700 p-3">
             <div className="space-y-2">
               {navLinks.map((link) => (
-                <Link key={link.to} to={link.to} onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded text-white">
+                <a key={link.to} href={link.to} onClick={(e) => { handleHashNav(link.hash)(e); }} className="block px-3 py-2 rounded text-white">
                   {link.name}
-                </Link>
+                </a>
               ))}
             </div>
           </div>
